@@ -1,26 +1,104 @@
 @import "tailwindcss";
 
+/* Layout/typography follow 365crm.io (Space Grotesk, slate text, pill buttons, soft tinted bands).
+   Colour comes from the per-product theme below: CRM is brand purple (matches the Softconnect logo and the CRM app), HR is teal. Pages opt in via data-theme
+   (see ThemeShell); add a product = add one [data-theme] block. */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --t-primary: #6b35a8;
+  --t-primary-dark: #552a8a;
+  --t-soft: #f4edfb;
+  --t-deep: #33174f;
+  --t-deep-2: #6b35a8;
+  --t-glow: rgba(107, 53, 168, 0.3);
+}
+[data-theme="hr"] {
+  --t-primary: #0d7a6f;
+  --t-primary-dark: #095c54;
+  --t-soft: #e5f5f2;
+  --t-deep: #073b36;
+  --t-deep-2: #0d7a6f;
+  --t-glow: rgba(13, 122, 111, 0.2);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+@theme {
+  --color-primary: var(--t-primary);
+  --color-primary-dark: var(--t-primary-dark);
+  --color-soft: var(--t-soft);
+  --color-deep: var(--t-deep);
+  --color-deep-2: var(--t-deep-2);
+  --color-ink: #343f52;
+  --color-navy: var(--t-deep);
+  --color-navy-soft: var(--t-deep-2);
+  --color-accent: var(--t-accent, #e8742a);
+  --color-success: #10b981;
+  --color-warn: #f59e0b;
+  --color-danger: #ef4444;
+  --color-info: #06b6d4;
+  --color-line: #e4e7ec;
+  --color-hair: #eef2f7;
+  --color-body: #60697b;
+  --color-muted: #60697b;
+  --color-subtle: #aab0bc;
+  --color-canvas: #f6f7f9;
+  --font-sans: var(--font-space), -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --radius-card: 12px;
+  --shadow-card: 0 0.25rem 1.75rem rgba(30, 34, 40, 0.07);
+  --shadow-lift: 0 24px 60px -24px rgba(15, 23, 42, 0.22), 0 8px 20px -12px rgba(15, 23, 42, 0.1);
+  --animate-rise: rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  --animate-float: float 6s ease-in-out infinite;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(18px); }
+    to { opacity: 1; transform: none; }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+html { scroll-behavior: smooth; }
+
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1); transition-delay: var(--d, 0ms); }
+.reveal.in { opacity: 1; transform: none; }
+@keyframes marquee { to { transform: translateX(-50%); } }
+@keyframes blob { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(30px,-24px) scale(1.12); } }
+@keyframes ring { from { stroke-dashoffset: 126; } to { stroke-dashoffset: var(--to, 6); } }
+@keyframes shine { to { background-position: 200% center; } }
+.text-shine { background: linear-gradient(90deg, var(--t-primary), #f58220, var(--t-primary)); background-size: 200% auto; -webkit-background-clip: text; background-clip: text; color: transparent; animation: shine 5s linear infinite; }
+
+body { background: #fff; color: var(--color-body); font-family: var(--font-sans); line-height: 1.6; }
+:focus-visible { outline: 2px solid var(--color-primary); outline-offset: 2px; border-radius: 6px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; }
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
 }
+
+@keyframes dash { to { stroke-dashoffset: -24; } }
+@keyframes pulse-ring { 0% { transform: scale(.9); opacity: .6; } 100% { transform: scale(1.35); opacity: 0; } }
+@keyframes pick { 0%, 30% { background-color: color-mix(in srgb, var(--t-primary) 28%, white); } 34%, 100% { background-color: #fff; } }
+@keyframes pop { from { opacity: 0; transform: translateY(14px) scale(.94); } to { opacity: 1; transform: none; } }
+.dash-line { stroke-dasharray: 6 6; animation: dash 1s linear infinite; }
+.pulse-ring { animation: pulse-ring 2.4s ease-out infinite; }
+.pick { animation: pick 6s infinite; }
+
+@keyframes orbit { to { transform: rotate(360deg); } }
+@keyframes orbit-rev { to { transform: rotate(-360deg); } }
+
+@keyframes dash-draw { 0% { stroke-dashoffset: 1; } 60%,100% { stroke-dashoffset: 0; } }
+
+@keyframes travel { 0% { left: 0; } 100% { left: 100%; } }
+@keyframes flow { to { background-position: 200% 0; } }
+
+@keyframes wave { 0%, 100% { transform: scaleY(.3); } 50% { transform: scaleY(1); } }
+
+@keyframes growx { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+@keyframes shake { 0%, 60%, 100% { transform: rotate(0); } 10%, 30%, 50% { transform: rotate(14deg); } 20%, 40% { transform: rotate(-14deg); } }
+@keyframes cycle3 { 0% { opacity: 0; transform: translateY(8px); } 5%, 30% { opacity: 1; transform: none; } 35%, 100% { opacity: 0; transform: translateY(-8px); } }
+@keyframes typing { 0%, 60%, 100% { transform: translateY(0); opacity: .4; } 30% { transform: translateY(-4px); opacity: 1; } }
+@keyframes fillbar { from { width: 0; } }
+
+@keyframes toggle { from { transform: translateX(0); } to { transform: translateX(20px); } }
