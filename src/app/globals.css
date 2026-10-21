@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 /* Layout/typography follow 365crm.io (Space Grotesk, slate text, pill buttons, soft tinted bands).
-   Colour comes from the per-product theme below: CRM is brand purple (matches the Softconnect logo and the CRM app), HR is teal. Pages opt in via data-theme
+   Colour comes from the per-product theme below: CRM is brand purple (matches the SoftCRMS logo and the CRM app), HR is teal. Pages opt in via data-theme
    (see ThemeShell); add a product = add one [data-theme] block. */
 :root {
   --t-primary: #6b35a8;

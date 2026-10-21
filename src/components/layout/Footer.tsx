@@ -9,7 +9,7 @@ export function Footer() {
       <Container className="grid gap-10 py-14 md:grid-cols-[1.6fr_1fr_1fr_1fr]">
         <div>
           <span className="inline-block">
-            <Image src="/images/softconnect-logo.png" alt={site.name} width={830} height={585} className="h-12 w-auto" />
+            <Image src="/images/softcrms-logo.png" alt="SoftCRMS" width={1075} height={795} className="h-16 w-auto mix-blend-multiply" />
           </span>
           <p className="mt-4 max-w-sm text-sm">{site.description}</p>
         </div>

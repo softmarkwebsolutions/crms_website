@@ -1,10 +1,12 @@
+import { CRM_BASE } from "@/lib/crm";
 import { cleanMobile, validateDemoRequest, type DemoRequest } from "@/lib/validation";
 
 // Server-side proxy so the CRM base URL / token / campaign never reach the browser.
-// Forwards to the CRM's lead intake: POST {CRM_API_BASE_URL}/api/save_lead (see docs/API.md).
-// The CRM mounts routes/api.php under /api, so the public path is /api/save_lead; plain /save_lead is a 404.
-// Defaults below are the website's own campaign (not secrets); override them with env vars.
-const DEFAULTS = { base: "https://crms.softwinquote.com", campaign: "october_new1", companyId: "6a924caa5db22457820d9772" };
+// Forwards to the CRM's website intake: POST {CRM_API_BASE_URL}/api/website_lead (see docs/API.md).
+// The CRM mounts routes/api.php under /api, so the public path is /api/website_lead.
+// The CRM finds the company by id OR name and creates this month's campaign itself (oct_campaign,
+// nov_campaign, ...), so nothing here has to change when the month does. Defaults are not secrets.
+const DEFAULTS = { base: CRM_BASE, companyId: "6a924caa5db22457820d9772", companyName: "Softmark Web Solutions" };
 
 const hits = new Map<string, number[]>();
 function limited(ip: string) {
@@ -39,11 +41,13 @@ export async function POST(request: Request) {
   if (Object.keys(errors).length) return Response.json({ error: "Please check the highlighted fields.", errors }, { status: 422 });
 
   const base = process.env.CRM_API_BASE_URL || DEFAULTS.base;
-  const campaign = process.env.CRM_DEMO_CAMPAIGN || DEFAULTS.campaign;
+  // Only set CRM_DEMO_CAMPAIGN to pin one fixed campaign; left empty the CRM uses the monthly one.
+  const campaign = process.env.CRM_DEMO_CAMPAIGN || "";
   const companyId = process.env.CRM_COMPANY_ID || DEFAULTS.companyId;
+  const companyName = process.env.CRM_COMPANY_NAME || DEFAULTS.companyName;
 
   try {
-    const res = await fetch(`${base.replace(/\/$/, "")}/api/save_lead`, {
+    const res = await fetch(`${base.replace(/\/$/, "")}/api/website_lead`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -53,8 +57,10 @@ export async function POST(request: Request) {
       body: JSON.stringify({
         name: data.name.trim(),
         mobile: Number(cleanMobile(data.mobile)),
+        // The CRM tries the id first, then the name, so a stale id no longer breaks the form.
         company_id: companyId,
-        campaign_name: campaign,
+        company_name: companyName,
+        ...(campaign ? { campaign_name: campaign } : {}),
       }),
       signal: AbortSignal.timeout(10_000),
     });
@@ -64,7 +70,7 @@ export async function POST(request: Request) {
       console.error("[demo-request] CRM rejected the lead", res.status);
       return Response.json({ error: "We couldn't submit your request. Please try again." }, { status: 502 });
     }
-    // The CRM can answer HTTP 200 with an error body (e.g. unknown campaign), so read the body too.
+    // Be defensive: also read the body for an error message, whatever the status code was.
     let parsed: { error?: string; original?: { error?: string } } | null = null;
     try { parsed = JSON.parse(text); } catch { /* non-JSON body: trust the status code */ }
     const crmError = parsed?.original?.error ?? parsed?.error;
