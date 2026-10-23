@@ -1,7 +1,7 @@
 import { Icon } from "@/components/ui/Icon";
 import { CallTimer } from "./CallTimer";
 
-const rows = [["Company", "Kisan Tractors"], ["Email", "ramesh@kisan.in"], ["Mobile", "98••••421"], ["Source", "Facebook"], ["Campaign", "Tractor loan"], ["City", "Jaipur"]];
+const rows = [["Company", "Kisan Tractors"], ["Email", "ramesh@kisan.in"], ["Mobile", "98••••421"], ["Source", "Facebook"], ["Campaign", "Tractor loan"]];
 const channels = [["Email", "bg-info"], ["SMS", "bg-success"], ["WhatsApp", "bg-primary"]];
 
 /** Calling-panel mockup: lead card on a phone, call summary popover, and a channel picker. All demo data. */
@@ -22,6 +22,17 @@ export function CallingPanel({ className = "" }: { className?: string }) {
           <dl className="mx-3 mb-4 divide-y divide-hair rounded-lg border border-line text-[11px]">
             {rows.map(([k, v]) => <div key={k} className="flex justify-between px-2.5 py-1.5"><dt className="font-bold text-primary">{k}</dt><dd className="text-muted">{v}</dd></div>)}
           </dl>
+          <div className="mx-3 mb-4 rounded-lg border border-line p-2.5">
+            <p className="mb-1.5 flex items-center justify-between text-[10px] font-bold uppercase tracking-wider text-muted">Lead rating <span className="normal-case tracking-normal text-subtle">by Priya</span></p>
+            <div className="grid grid-cols-3 gap-1.5 text-[11px] font-bold">
+              {[["1", "Low"], ["3", "Medium"], ["5", "High"]].map(([n, w], k) => (
+                <span key={n} className="pick flex items-center justify-center gap-1 rounded-md border border-line py-1.5 text-ink" style={{ animationDelay: `${k * 2}s` }}>
+                  {n}<svg viewBox="0 0 24 24" className="size-3 fill-warn" aria-hidden><path d="M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z" /></svg>{w}
+                </span>
+              ))}
+            </div>
+            <p className="mt-1.5 text-[10px] text-muted">&ldquo;Wants a demo on Saturday&rdquo;</p>
+          </div>
         </div>
 
         <div className="absolute left-[330px] top-16 w-[220px] rounded-2xl border border-line bg-white p-4 shadow-[var(--shadow-lift)]" style={{ animation: "pop .8s .3s both" }}>
@@ -66,7 +77,7 @@ export function CallingPanel({ className = "" }: { className?: string }) {
           </ul>
         </div>
 
-        <div className="absolute left-[196px] top-[462px] flex animate-float items-center gap-2 rounded-xl bg-white px-3 py-2 text-[11px] shadow-[var(--shadow-card)]">
+        <div className="absolute left-[196px] top-[490px] flex animate-float items-center gap-2 rounded-xl bg-white px-3 py-2 text-[11px] shadow-[var(--shadow-card)]">
           <span className="grid size-7 place-items-center rounded-lg bg-gradient-to-br from-warn to-orange-500 text-white"><Icon name="bell" className="size-3.5" /></span>
           <span><b className="block text-ink">Follow-up Sat 11:00</b><span className="text-muted">Reminder set</span></span>
         </div>

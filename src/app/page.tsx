@@ -14,6 +14,9 @@ import { CallingPanel } from "@/components/sections/CallingPanel";
 import { FeatureOrbit } from "@/components/sections/FeatureOrbit";
 import { QuickLead } from "@/components/sections/QuickLead";
 import { site } from "@/lib/site";
+import { IndustriesSection } from "@/components/sections/IndustriesSection";
+import { WhySmallBusiness } from "@/components/sections/WhySmallBusiness";
+import { AnalyticsTeaser } from "@/components/sections/AnalyticsTeaser";
 import { Faq } from "@/components/sections/Faq";
 
 export const metadata: Metadata = {
@@ -219,6 +222,12 @@ export default function Home() {
           ))}
         </div>
       </Section>
+
+      <IndustriesSection />
+
+      <WhySmallBusiness />
+
+      <AnalyticsTeaser />
 
       <Faq items={faqs} />
 

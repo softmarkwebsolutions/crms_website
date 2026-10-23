@@ -56,7 +56,6 @@ export function DemoForm({ dark = false, inline = false, cta = "Request a demo" 
   const input =
     "w-full rounded-xl border border-line bg-white px-4 py-3 text-[15px] text-body placeholder:text-subtle focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20";
   const label = `mb-1.5 block text-sm font-semibold ${dark ? "text-white" : "text-ink"}`;
-  const err = dark ? "text-red-300" : "text-danger";
 
   const field = (k: keyof DemoRequest, text: string, type = "text", auto?: string, required = false) => (
     <div>

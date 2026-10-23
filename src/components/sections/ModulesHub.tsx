@@ -28,7 +28,7 @@ export function ModulesHub() {
         <div className="absolute grid place-items-center" style={{ left: CX - 95, top: CY - 95, width: 190, height: 190 }}>
           <span className="pulse-ring absolute inset-0 rounded-full bg-primary/20" />
           <span className="relative grid size-full place-items-center rounded-full border border-line bg-soft shadow-[var(--shadow-card)]">
-            <Image src="/images/softconnect-logo.png" alt="Softconnect CRM" width={830} height={585} className="w-28 mix-blend-multiply" />
+            <Image src="/images/softcrms-logo.png" alt="SoftCRMS" width={1075} height={795} className="w-32 mix-blend-multiply" />
           </span>
         </div>
 

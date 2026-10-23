@@ -69,9 +69,9 @@ export function CallingBento() {
 
           {/* 2 priority */}
           <Card delay={100} className="md:col-span-2">
-            <Head icon="bolt" grad="from-orange-400 to-amber-500" title="Priority leads first" text="Preferences decide which leads reach the agent first, so the hottest ones are called first." />
+            <Head icon="bolt" grad="from-orange-400 to-amber-500" title="Lead rating" text="Rate a lead 1, 3 or 5 stars (Low, Medium, High) while you are on the call, and filter your list by it." />
             <Mini className="space-y-2.5">
-              {[["Ramesh · Tractor loan", "HOT", "bg-danger text-white", 92], ["Priya · Pickup truck", "WARM", "bg-warn text-white", 64], ["Anita · Two-wheeler", "COLD", "bg-info text-white", 30]].map(([n, b, c, w], i) => (
+              {[["Ramesh · Tractor loan", "5★ High", "bg-danger text-white", 92], ["Priya · Pickup truck", "3★ Medium", "bg-warn text-white", 64], ["Anita · Two-wheeler", "1★ Low", "bg-info text-white", 30]].map(([n, b, c, w], i) => (
                 <div key={n as string} className="flex items-center gap-3 text-sm">
                   <span className="w-40 shrink-0 truncate font-semibold text-ink">{n}</span>
                   <div className="h-2 flex-1 overflow-hidden rounded-full bg-hair"><div className="h-full origin-left rounded-full bg-gradient-to-r from-primary to-warn" style={{ width: `${w}%`, animation: `growx 1.2s ${i * 0.2}s ease-out both` }} /></div>
