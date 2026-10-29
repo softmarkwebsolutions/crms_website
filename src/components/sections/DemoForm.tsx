@@ -27,7 +27,7 @@ export function DemoForm({ dark = false, inline = false, cta = "Request a demo" 
       const res = await fetch("/api/demo-request", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(values),
+        body: JSON.stringify({ ...values, page: window.location.pathname }),
       });
       const json = await res.json().catch(() => ({}));
       if (res.ok) {

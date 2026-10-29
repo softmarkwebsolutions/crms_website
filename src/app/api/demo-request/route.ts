@@ -1,13 +1,10 @@
-import { CRM_BASE } from "@/lib/crm";
+import { CRM_APP_BASE } from "@/lib/crm";
 import { cleanMobile, validateDemoRequest, type DemoRequest } from "@/lib/validation";
 
-// Server-side proxy so the CRM base URL / token / campaign never reach the browser.
-// Forwards to the CRM's website intake: POST {CRM_API_BASE_URL}/api/website_lead (see docs/API.md).
-// The CRM mounts routes/api.php under /api, so the public path is /api/website_lead.
-// The CRM finds the company by id OR name and creates this month's campaign itself (oct_campaign,
-// nov_campaign, ...), so nothing here has to change when the month does. Defaults are not secrets.
-const DEFAULTS = { base: CRM_BASE, companyId: "6a924caa5db22457820d9772", companyName: "Softmark Web Solutions" };
-
+// Server-side proxy so the CRM URL never reaches the browser.
+// Forwards to the CRM's demo intake: POST {CRM_APP_BASE}/api/demo_request (https://app.softcrms.com/crms/api/demo_request).
+// The CRM saves the request, lists it for the super admin (Demo Requests) and emails them.
+// Override the whole URL with CRM_DEMO_API_URL.
 const hits = new Map<string, number[]>();
 function limited(ip: string) {
   const now = Date.now();
@@ -40,14 +37,11 @@ export async function POST(request: Request) {
   const errors = validateDemoRequest(data);
   if (Object.keys(errors).length) return Response.json({ error: "Please check the highlighted fields.", errors }, { status: 422 });
 
-  const base = process.env.CRM_API_BASE_URL || DEFAULTS.base;
-  // Only set CRM_DEMO_CAMPAIGN to pin one fixed campaign; left empty the CRM uses the monthly one.
-  const campaign = process.env.CRM_DEMO_CAMPAIGN || "";
-  const companyId = process.env.CRM_COMPANY_ID || DEFAULTS.companyId;
-  const companyName = process.env.CRM_COMPANY_NAME || DEFAULTS.companyName;
+  const url = process.env.CRM_DEMO_API_URL || `${CRM_APP_BASE}/api/demo_request`;
+  const page = String((body as { page?: unknown }).page ?? "").slice(0, 200);
 
   try {
-    const res = await fetch(`${base.replace(/\/$/, "")}/api/website_lead`, {
+    const res = await fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -56,11 +50,9 @@ export async function POST(request: Request) {
       },
       body: JSON.stringify({
         name: data.name.trim(),
-        mobile: Number(cleanMobile(data.mobile)),
-        // The CRM tries the id first, then the name, so a stale id no longer breaks the form.
-        company_id: companyId,
-        company_name: companyName,
-        ...(campaign ? { campaign_name: campaign } : {}),
+        mobile: cleanMobile(data.mobile),
+        source: "website",
+        page,
       }),
       signal: AbortSignal.timeout(10_000),
     });
