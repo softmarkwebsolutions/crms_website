@@ -4,8 +4,6 @@ import { posts } from "@/lib/blog";
 import { modules } from "@/lib/modules";
 import { hrModules } from "@/lib/hr-modules";
 import { industries } from "@/lib/industries";
-import { locations } from "@/lib/locations";
-import { businessCrms } from "@/lib/business-crms";
 
 const staticPaths = [
   "/", "/lead-management", "/features", "/pricing", "/industries", "/hr", "/partner", "/contact", "/faq", "/blog",
@@ -28,8 +26,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...modules.map((m) => entry(`/modules/${m.slug}`, 0.7)),
     ...hrModules.map((m) => entry(`/hr/${m.slug}`, 0.7)),
     ...industries.map((i) => entry(`/industries/${i.slug}`, 0.7)),
-    ...businessCrms.map((b) => entry(`/crm-for/${b.slug}`, 0.7)),
-    ...locations.map((l) => entry(`/crm-software-in/${l.slug}`, 0.7)),
     ...posts.map((p) => entry(`/blog/${p.slug}`, 0.6, new Date(`${p.date}T00:00:00Z`))),
   ];
 }
