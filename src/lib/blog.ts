@@ -1,11 +1,77 @@
 import type { IconName } from "@/components/ui/Icon";
 
-export type Block = { h: string } | { p: string } | { ul: string[] };
+export type Block = { h: string } | { p: string } | {
+      image: string;
+      alt?: string;
+    }| { ul: string[] };
 export type Post = { slug: string; title: string; excerpt: string; date: string; read: number; tag: string; icon: IconName; grad: string; body: Block[] };
 
 // Starter articles written from what the product does. Edit, replace or add entries; each one becomes a /blog/[slug] page.
 export const posts: Post[] = [
-  {
+ 
+{
+  slug: "manage-team-salaries-easily",
+  title: "Manage Team Salaries Easily via SOFTCRMS Payroll Management Tools",
+  excerpt: "Simplify employee salary management, track payments, monitor attendance, and maintain organized payroll records with SOFTCRMS.",
+  date: "2026-11-14",
+  read: 4,
+  tag: "Payroll Management",
+  icon: "wallet",
+  grad: "from-blue-500 to-indigo-600",
+  body: [
+    {
+      p: "Managing employee salaries manually can become complicated as your business grows. Tracking attendance, calculating monthly salaries, managing payment records, and checking pending payments takes valuable time. SOFTCRMS helps businesses simplify payroll management with an organized and easy-to-use system."
+    },
+     {
+      image: "/images/blog/payroll-management.webp",
+      alt: "Employee Salary Tracking Software"
+    },
+    {
+      h: "Why manual salary management becomes difficult"
+    },
+    {
+      ul: [
+        "Maintaining employee salary records manually takes time.",
+        "Tracking paid and pending salaries becomes difficult.",
+        "Attendance and salary calculations can create confusion.",
+        "Finding previous salary records is not always easy.",
+        "Managing payroll for a growing team becomes complicated."
+      ]
+    },
+    {
+      h: "How SOFTCRMS makes payroll management easier"
+    },
+    {
+      p: "SOFTCRMS helps businesses organize employee information and salary records in one place. You can manage employee salary details, track payments, monitor attendance, and access payroll information more conveniently."
+    },
+    {
+      h: "Key benefits of payroll management"
+    },
+    {
+      ul: [
+        "Employee salary management in one place.",
+        "Easy access to employee records.",
+        "Better tracking of salary payments.",
+        "Organized attendance information.",
+        "Quick access to previous salary records."
+      ]
+    },
+    {
+      h: "Manage your team smarter"
+    },
+    {
+      p: "Whether you run a small business or manage a growing team, having organized payroll records can make daily operations easier. Spend less time managing salary records and more time focusing on business growth."
+    },
+    {
+      h: "Get started with SOFTCRMS"
+    },
+    {
+      p: "Simplify your employee management process with SOFTCRMS. Explore our business management solutions and make your daily operations more organized."
+    }
+  ],
+},
+
+    {
     slug: "one-list-for-every-lead-source",
     title: "Why every lead source should land in one list",
     excerpt: "Facebook forms, IVR calls and spreadsheets each hold part of the picture. Here is what changes when they share a single list.",
