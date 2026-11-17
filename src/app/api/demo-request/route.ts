@@ -2,7 +2,7 @@ import { CRM_APP_BASE } from "@/lib/crm";
 import { cleanMobile, validateDemoRequest, type DemoRequest } from "@/lib/validation";
 
 // Server-side proxy so the CRM URL never reaches the browser.
-// Forwards to the CRM's demo intake: POST {CRM_APP_BASE}/api/demo_request (https://app.softcrms.com/crms/api/demo_request).
+// Forwards to the CRM's demo intake: POST {CRM_APP_BASE}/api/demo_request (https://app.softcrms.com/api/demo_request).
 // The CRM saves the request, lists it for the super admin (Demo Requests) and emails them.
 // Override the whole URL with CRM_DEMO_API_URL.
 const hits = new Map<string, number[]>();

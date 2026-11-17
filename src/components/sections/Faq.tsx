@@ -1,9 +1,9 @@
 import { Section, SectionHead } from "@/components/ui/Section";
 
-export function Faq({ items, tone = "white" }: { items: { q: string; a: string }[]; tone?: "white" | "canvas" }) {
+export function Faq({ items, tone = "white", title = "Questions, answered", lede }: { items: { q: string; a: string }[]; tone?: "white" | "canvas"; title?: string; lede?: string }) {
   return (
     <Section id="faq" tone={tone}>
-      <SectionHead eyebrow="FAQ" title="Questions, answered" />
+      <SectionHead eyebrow="FAQ" title={title} lede={lede} />
       <div className="mx-auto max-w-3xl space-y-3">
         {items.map((f) => (
           <details key={f.q} className={`group rounded-[var(--radius-card)] border border-line p-5 open:shadow-[var(--shadow-card)] ${tone === "white" ? "bg-canvas" : "bg-white"}`}>

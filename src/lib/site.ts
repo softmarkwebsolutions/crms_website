@@ -26,6 +26,8 @@ export const pricing = {
   features: ["Leads from every source in one list", "Calling panel with call history", "Follow-up tasks and reminders", "Android caller app", "Lead rating and status tracking"],
 };
 import { hrModules } from "./hr-modules";
+import { locations } from "./locations";
+import { businessCrms } from "./business-crms";
 
 import type { IconName } from "@/components/ui/Icon";
 
@@ -99,6 +101,14 @@ export const footerGroups: { title: string; links: NavItem[] }[] = [
     ],
   },
   {
+    title: "CRM for business",
+    links: businessCrms.map((b) => ({ label: `CRM for ${b.name}`, href: `/crm-for/${b.slug}` })),
+  },
+  {
+    title: "CRM by city",
+    links: locations.map((l) => ({ label: `CRM Software in ${l.name}`, href: `/crm-software-in/${l.slug}` })),
+  },
+  {
     title: "Free tools",
     links: tools.map((t) => ({ label: t.label, href: t.href })),
   },
@@ -111,6 +121,7 @@ export const footerGroups: { title: string; links: NavItem[] }[] = [
       { label: "Sign in", href: site.appUrl },
       { label: "FAQ", href: "/faq" },
       { label: "Blog", href: "/blog" },
+      { label: "Become a Partner", href: "/partner" },
       { label: "Contact Us", href: "/contact" },
     ],
   },
