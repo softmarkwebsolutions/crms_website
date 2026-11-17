@@ -21,7 +21,6 @@ const groups: FaqGroup[] = [
     { q: `What does ₹${pricing.price} a ${pricing.period} include?`, a: "Leads from every source in one list, the calling panel with call history, follow-up tasks and reminders, the Android caller app, and lead rating and status tracking." },
     { q: "Is GST extra?", a: "Plan prices are before GST. GST is added at the rate in force and shown on your invoice. Use our GST calculator to work out any amount." },
     { q: "Can I cancel any time?", a: "Yes. The plan stays active until the end of the period you paid for and does not renew." },
-    { q: "Do you offer refunds?", a: "Yes, in the cases set out on our Refund Policy page, such as a double charge." },
     { q: "Do you have WhatsApp, billing and reports too?", a: "These are separate modules in the product. Ask during the demo how they are added to your plan." },
   ] },
   { id: "security", label: "Data & security", icon: "shield", items: [

@@ -96,17 +96,20 @@ export function Note({ children }: { children: ReactNode }) {
 
 /** Links to the other free tools, shown under each calculator. */
 export function MoreTools({ current }: { current: string }) {
+  const list = tools.filter((t) => t.href !== current);
+  // One row on desktop: 4 cards on a calculator page, 5 on the blog.
+  const cols = list.length >= 5 ? "lg:grid-cols-5" : "lg:grid-cols-4";
   return (
     <Section tone="white">
       <SectionHead eyebrow="Free tools" title="More calculators for your business" />
-      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-        {tools.filter((t) => t.href !== current).map((t, i) => (
-          <Reveal key={t.href} delay={i * 80}>
-            <Link href={t.href} className="group block h-full rounded-3xl border border-line bg-canvas p-6 transition duration-300 hover:-translate-y-2 hover:shadow-[var(--shadow-lift)]">
-              <span className={`grid size-14 place-items-center rounded-2xl bg-gradient-to-br text-white transition group-hover:rotate-6 ${t.grad}`}><Icon name={t.icon} className="size-7" /></span>
-              <h3 className="mt-4 text-lg font-bold text-ink">{t.label}</h3>
-              <p className="mt-1 text-[15px] text-muted">{t.blurb}</p>
-              <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-bold text-primary">Open <Icon name="arrow" className="size-4 transition group-hover:translate-x-1" /></span>
+      <div className={`grid gap-4 sm:grid-cols-2 ${cols}`}>
+        {list.map((t, i) => (
+          <Reveal key={t.href} delay={i * 60} className="h-full">
+            <Link href={t.href} className="group flex h-full flex-col rounded-2xl border border-line bg-canvas p-4 transition hover:border-primary/40 hover:bg-white hover:shadow-[var(--shadow-card)]">
+              <span className={`grid size-10 place-items-center rounded-xl bg-gradient-to-br text-white ${t.grad}`}><Icon name={t.icon} className="size-5" /></span>
+              <h3 className="mt-3 text-[15px] font-bold leading-snug text-ink">{t.label}</h3>
+              <p className="mt-1 flex-1 text-[13px] text-muted">{t.blurb}</p>
+              <span className="mt-3 inline-flex items-center gap-1.5 text-sm font-bold text-primary">Open <Icon name="arrow" className="size-4 transition group-hover:translate-x-1" /></span>
             </Link>
           </Reveal>
         ))}
