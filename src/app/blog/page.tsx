@@ -21,30 +21,27 @@ export default function BlogPage() {
             {[...new Set(posts.map((p) => p.tag))].map((t) => <span key={t} className="rounded-full border border-line bg-white px-4 py-1.5 text-sm font-bold text-muted">{t}</span>)}
           </div>
           <Reveal>
-            <Link href={`/blog/${first.slug}`} className="group grid overflow-hidden rounded-3xl border border-line bg-white transition duration-300 hover:shadow-[var(--shadow-lift)] md:grid-cols-[0.6fr_1.4fr]">
-              <div className={`relative grid min-h-36 place-items-center bg-gradient-to-br text-white ${first.grad}`}>
-                <div aria-hidden className="absolute -right-10 -top-10 size-28 rounded-full bg-white/10" />
-                <Icon name={first.icon} className="size-14 transition group-hover:scale-110" />
+            <Link href={`/blog/${first.slug}`} className="group flex items-center gap-5 rounded-2xl border border-line bg-white p-4 transition hover:border-primary/40 hover:shadow-[var(--shadow-card)] md:p-5">
+              <span className={`hidden size-16 shrink-0 place-items-center rounded-2xl bg-gradient-to-br text-white sm:grid ${first.grad}`}><Icon name={first.icon} className="size-7" /></span>
+              <div className="min-w-0 flex-1">
+                <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-primary">Latest &middot; {first.tag}</p>
+                <h2 className="mt-1 text-lg font-bold leading-snug text-ink md:text-xl">{first.title}</h2>
+                <p className="mt-1 line-clamp-2 text-sm text-muted">{first.excerpt}</p>
+                <p className="mt-2 text-xs text-subtle">{fmtDate(first.date)} &middot; {first.read} min read</p>
               </div>
-              <div className="p-6 md:p-7">
-                <p className="text-xs font-bold uppercase tracking-[0.14em] text-primary">Latest &middot; {first.tag}</p>
-                <h2 className="mt-2 text-xl font-bold text-ink md:text-2xl">{first.title}</h2>
-                <p className="mt-2 text-[15px] text-muted">{first.excerpt}</p>
-                <p className="mt-3 text-sm text-subtle">{fmtDate(first.date)} &middot; {first.read} min read</p>
-                <span className="mt-3 inline-flex items-center gap-1.5 text-sm font-bold text-primary">Read article <Icon name="arrow" className="size-4 transition group-hover:translate-x-1" /></span>
-              </div>
+              <Icon name="arrow" className="hidden size-5 shrink-0 text-primary transition group-hover:translate-x-1 md:block" />
             </Link>
           </Reveal>
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {rest.map((p, i) => (
-              <Reveal key={p.slug} delay={i * 100} className="h-full">
-                <Link href={`/blog/${p.slug}`} className="group flex h-full flex-col overflow-hidden rounded-3xl border border-line bg-white transition duration-300 hover:-translate-y-2 hover:shadow-[var(--shadow-lift)]">
-                  <div className={`grid h-20 place-items-center bg-gradient-to-br text-white ${p.grad}`}><Icon name={p.icon} className="size-9 transition group-hover:rotate-6" /></div>
-                  <div className="flex flex-1 flex-col p-5">
-                    <p className="text-xs font-bold uppercase tracking-[0.14em] text-primary">{p.tag}</p>
-                    <h3 className="mt-1.5 text-base font-bold leading-snug text-ink">{p.title}</h3>
-                    <p className="mt-1.5 flex-1 text-sm text-muted">{p.excerpt}</p>
-                    <p className="mt-3 text-xs text-subtle">{fmtDate(p.date)} &middot; {p.read} min read</p>
+              <Reveal key={p.slug} delay={i * 80} className="h-full">
+                <Link href={`/blog/${p.slug}`} className="group flex h-full gap-3.5 rounded-2xl border border-line bg-white p-4 transition hover:border-primary/40 hover:shadow-[var(--shadow-card)]">
+                  <span className={`grid size-11 shrink-0 place-items-center rounded-xl bg-gradient-to-br text-white ${p.grad}`}><Icon name={p.icon} className="size-5" /></span>
+                  <div className="min-w-0">
+                    <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-primary">{p.tag}</p>
+                    <h3 className="mt-0.5 text-[15px] font-bold leading-snug text-ink">{p.title}</h3>
+                    <p className="mt-1 line-clamp-2 text-[13px] text-muted">{p.excerpt}</p>
+                    <p className="mt-2 text-xs text-subtle">{fmtDate(p.date)} &middot; {p.read} min read</p>
                   </div>
                 </Link>
               </Reveal>

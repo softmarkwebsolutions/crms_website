@@ -11,3 +11,14 @@ export function validateDemoRequest(v: DemoRequest): FieldErrors {
   if (!/^\d{10}$/.test(cleanMobile(v.mobile))) e.mobile = "Enter a 10-digit mobile number.";
   return e;
 }
+
+/** Partner programme application. The CRM only stores name and mobile today; the rest is forwarded for when it does. */
+export type PartnerRequest = { name: string; mobile: string; email: string; state: string; city: string; agree: boolean; website?: string };
+export type PartnerErrors = Partial<Record<keyof PartnerRequest, string>>;
+
+export function validatePartnerRequest(v: PartnerRequest): PartnerErrors {
+  const e: PartnerErrors = validateDemoRequest({ name: v.name, mobile: v.mobile });
+  if (v.email.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.email.trim())) e.email = "Enter a valid email address.";
+  if (!v.agree) e.agree = "Please accept to continue.";
+  return e;
+}
